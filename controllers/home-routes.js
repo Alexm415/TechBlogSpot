@@ -1,3 +1,4 @@
+const express = require("express");
 const router = require("express").Router();
 const { Post, User } = require("../models");
 const withAuth = require("../utils/auth");
@@ -15,11 +16,11 @@ router.get("/", async (req, res) => {
     });
 
     // Serialize data so the template can read it
-    const post = postData.map((post) => post.get({ plain: true }));
-
+    const posts = postData.map((post) => post.get({ plain: true }));
+    console.log(posts);
     // Pass serialized data and session flag into template
     res.render("homepage", {
-      post,
+      posts,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -78,6 +79,15 @@ router.get("/login", (req, res) => {
   }
 
   res.render("login");
+});
+router.get("/logout", (req, res) => {
+  if (req.session.logged_in) {
+    req.session.destroy(() => {
+      res.redirect("/");
+    });
+  } else {
+    res.status(404).end();
+  }
 });
 
 module.exports = router;
