@@ -28,11 +28,11 @@
     </form>
   </div>
 
-  {{#if post.length}}
-    <div class="col-md-6 project-list">
+  {{#if posts}}
+    <div class="col-md-6 post-list">
       <h3>Current Post:</h3>
 
-      {{#each post as |post|}}
+      {{#each posts as |post|}}
         <div class="row mb-2">
           <div class="col-md-8">
             <h4><a href="/post/{{post.id}}">{{post.title}}</a></h4>
@@ -46,6 +46,8 @@
         </div>
       {{/each}}
     </div>
+  {{else}}
+    <h3>No post yet</h3>
   {{/if}}
 </div>
 

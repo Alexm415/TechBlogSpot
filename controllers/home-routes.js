@@ -50,6 +50,26 @@ router.get("/post/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
+router.post("/posts/:id/comments", withAuth, async (req, res) => {
+  try {
+    const postUpdate = await Post.update(req.body, {
+      where: { id: req.params.id },
+      include: [
+        {
+          model: User,
+          attributes: ["username"],
+        },
+      ],
+    });
+    res.status(200).json({
+      ...postUpdate,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
 // Use withAuth middleware to prevent access to route
 router.get("/profile", withAuth, async (req, res) => {
@@ -61,7 +81,7 @@ router.get("/profile", withAuth, async (req, res) => {
     });
 
     const user = userData.get({ plain: true });
-
+    console.log(user);
     res.render("profile", {
       ...user,
       logged_in: true,
@@ -79,15 +99,6 @@ router.get("/login", (req, res) => {
   }
 
   res.render("login");
-});
-router.get("/logout", (req, res) => {
-  if (req.session.logged_in) {
-    req.session.destroy(() => {
-      res.redirect("/");
-    });
-  } else {
-    res.status(404).end();
-  }
 });
 
 module.exports = router;

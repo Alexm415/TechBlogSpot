@@ -19,11 +19,11 @@
       </header>
       <div class="nav-scroller py-1 mb2">
         <nav class="nav d-flex justify-content-between">
-          <a class="p-2 text-muted" href="#">Home</a>
+          <a class="p-2 text-muted" href="/">Home</a>
           {{#if logged_in}}
             <a class="p-2 text-muted" href="/profile">profile</a>
 
-            <button class="no-button" id="logout">logout</button>
+            <a class="p-2 text-muted no-button" id="logout">logout</a>
           {{else}}
             <a class="p-2 text-muted" href="/login">login</a>
           {{/if}}
@@ -41,4 +41,5 @@
     </div>
     {{{body}}}
   </body>
+  <script src="/js/logout.js"></script>
 </html>

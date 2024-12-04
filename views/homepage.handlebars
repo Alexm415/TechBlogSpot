@@ -1,8 +1,9 @@
-<div class="container">
+{{!-- <div class="container">
   <h1 class="text-center">BlogSpot</h1>
   {{#if posts}}
     {{#each posts as |post|}}
-      <div class="container">
+      <div class="container box">
+        <h2>{{post.title}}</h2>
         <p>
           {{post.content}}
         </p>
@@ -10,6 +11,60 @@
           Created by
           {{post.user.username}}
         </h3>
+      </div>
+    {{/each}}
+  {{else}}
+    <p>No post YET!</p>
+  {{/if}}
+</div> --}}
+
+<div class="container">
+  <h1 class="text-center">BlogSpot</h1>
+  {{#if posts}}
+    {{#each posts as |post|}}
+      <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                <div class="card-body d-flex flex-column align-items-start">
+        <h2 class="mb-0">{{post.title}}</h2>
+        <p class="card-text mb-auto">
+          {{post.content}}
+        </p>
+        <h3>
+          Created by
+          {{post.user.username}}
+        </h3>
+        {{#if ../logged_in}}
+          <!-- Comment Form -->
+          <form  id="commets" method="POST">
+            <div class="form-group">
+              <label for="comment">Add a Comment:</label>
+              <textarea
+                id="comment"
+                name="comment"
+                class="form-control"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" value={{post.id}} class="btn btn-primary">Submit Comment</button>
+            <h4>Comments:</h4>
+            <p>{{post.comment}}</p>
+          </form>
+        {{else}}
+          {{log logged_in}}
+          <p>Login to add commits</p>
+        {{/if}}
+
+        <!-- Display Comments -->
+
+        <ul>
+          {{#each post.comments as |comment|}}
+            <li>{{comment.content}} - {{comment.user.username}}</li>
+          {{/each}}
+        </ul>
+        </div>
+        </div>
+        </div>
       </div>
     {{/each}}
   {{else}}

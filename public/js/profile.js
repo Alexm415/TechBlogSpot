@@ -41,8 +41,8 @@ document
   .querySelector(".new-post-form")
   .addEventListener("submit", newFormHandler);
 
-document
-  .querySelector(".post-list")
-  .addEventListener("click", delButtonHandler);
-
+const post = document.querySelector(".post-list");
+if (post) {
+  post.addEventListener("click", delButtonHandler);
+}
 document.querySelector("#logout").addEventListener("click", logout);
